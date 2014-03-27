@@ -1,32 +1,15 @@
-# 2048
-A small clone of [1024](https://play.google.com/store/apps/details?id=com.veewo.a1024), based on [Saming's 2048](http://saming.fr/p/2048/) (also a clone).
+# 2048 : 请好好珍惜你身边的每一个程序员
 
-Made just for fun. [Play it here!](http://gabrielecirulli.github.io/2048/)
+我不觉得在这里写文字会被人看到 ... 可我还是想要写些什么 ...
 
-### Contributions
+这个版本只是对 [原版 2048](http://gabrielecirulli.github.io/2048/) 的又一个克隆 ... 毫无新意 ...
 
- - [TimPetricola](https://github.com/TimPetricola) added best score storage
- - [chrisprice](https://github.com/chrisprice) added custom code for swipe handling on mobile
- - [elektryk](https://github.com/elektryk) made swipes work on Windows Phone
- - [mgarciaisaia](https://github.com/mgarciaisaia) addes support for Android 2.3
+做这个版本大概只是想表达 ... 每个或平凡或不平凡的项目背后 ... 一定都有一众默默辛苦的程序员 ...
 
-Many thanks to [rayhaanj](https://github.com/rayhaanj), [Mechazawa](https://github.com/Mechazawa), [grant](https://github.com/grant), [remram44](https://github.com/remram44) and [ghoullier](https://github.com/ghoullier) for the many other good contributions.
+我没有用比较常见的「程序猿」称呼 ... 只是觉得没有必要自嘲 ... 程序员很是骄傲的 ... 
 
-### Screenshot
+说来 ... 我还蛮希望那些抱着「我有个牛逼到爆的想法就缺一个程序员啦」想法的人来玩玩看这个的 ...
 
-<p align="center">
-  <img src="http://pictures.gabrielecirulli.com/2048-20140309-234100.png" alt="Screenshot"/>
-</p>
+以及 ... 这个版本还表达了另一件事 ...
 
-That screenshot is fake, by the way. I never reached 2048 :smile:
-
-## Contributing
-Changes and improvements are more than welcome! Feel free to fork and open a pull request. Please make your changes in a specific branch and request to pull into `master`! If you can, please make sure the game fully works before sending the PR, as that will help speed up the process.
-
-You can find the same information in the [contributing guide.](https://github.com/gabrielecirulli/2048/blob/master/CONTRIBUTING.md)
-
-## License
-2048 is licensed under the [MIT license.](https://github.com/gabrielecirulli/2048/blob/master/LICENSE.txt)
-
-## Donations
-I made this in my spare time, and it's hosted on GitHub (which means I don't have any hosting costs), but if you enjoyed the game and feel like buying me coffee, you can donate at my BTC address: `1Ec6onfsQmoP9kkL3zkpB6c5sA4PVcXU2i`. Thank you very much!
+没有拖延 ... 就没有一切 ...
