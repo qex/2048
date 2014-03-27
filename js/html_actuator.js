@@ -3,9 +3,10 @@ function HTMLActuator() {
   this.scoreContainer   = document.querySelector(".score-container");
   this.bestContainer    = document.querySelector(".best-container");
   this.messageContainer = document.querySelector(".game-message");
-  this.sharingContainer = document.querySelector(".score-sharing");
+  this.tweetButton      = document.querySelector('.tweet');
 
   this.score = 0;
+  this.level = 0;
 }
 
 HTMLActuator.prototype.actuate = function (grid, metadata) {
@@ -38,10 +39,6 @@ HTMLActuator.prototype.actuate = function (grid, metadata) {
 
 // Continues the game (both restart and keep playing)
 HTMLActuator.prototype.continueGame = function () {
-  if (typeof ga !== "undefined") {
-    ga("send", "event", "game", "restart");
-  }
-
   this.clearMessage();
 };
 
@@ -62,12 +59,18 @@ HTMLActuator.prototype.addTile = function (tile) {
   // We can't use classlist because it somehow glitches when replacing classes
   var classes = ["tile", "tile-" + tile.value, positionClass];
 
-  if (tile.value > 2048) classes.push("tile-super");
+  if ( tile.value > this.level ) this.level = tile.value;
 
   this.applyClasses(wrapper, classes);
 
   inner.classList.add("tile-inner");
-  inner.textContent = tile.value;
+  inner.innerHTML = function( n ) {
+    for ( i = 0; n > 1; ++ i, n >>= 1 );
+    return [
+        null, '拖延', '熬夜', '构思', '规划', '建模', 
+        '写代码', '集成','需求<br />变更', '除错', '通宵', '上线'
+        ][i];
+  }( tile.value );
 
   if (tile.previousPosition) {
     // Make sure that the tile gets rendered in the previous position first
@@ -131,38 +134,39 @@ HTMLActuator.prototype.updateBestScore = function (bestScore) {
 
 HTMLActuator.prototype.message = function (won) {
   var type    = won ? "game-won" : "game-over";
-  var message = won ? "You win!" : "Game over!";
+  var message = won ? 
+    "在故事的最后<br />项目终于得以问世<br />之前所付出的一切辛苦"
+    + "<br />在这一刻看来都值了" : function( n ) {
+      for ( i = 0; n > 4; ++ i, n >>= 1 );
+      return [ 
+        "由于长期熬夜的生活<br />此时此刻<br />你终于再也无法醒来了",
+        "脑中一片混乱<br />你决定忘记这个项目<br />从明天开始<br />去摆摊卖大饼",
+        "你仍未知道<br />那天所想出的项目<br />该如何下手",
+        "数据结构 视图<br />动态规划 解耦<br />面对这千丝万缕的联系<br />"
+          + "你决定还是算了",
+        "你突然意识到<br />以自己的技术实力<br />计划中的那些功能<br />根本无法实现",
+        "一段时间之后<br />你惊讶的发现<br />自己完成的代码<br />和系统竟完全不兼容",
+        "你衷心的希望<br />所有想一出是一出<br />乱改需求的人<br />都他妈 "
+          + "<span style=\"font-size:54px;color:#cc3333\">死ね！</span>",
+        "BUG<br />还是 BUG<br />你引发了更多的 BUG<br />终于被淹没在虫海之中",
+        "太阳升起之后<br />你因通宵而猝死的消息<br />出现在各大网站之上<br />"
+          + "随后又被飞速的忘记",
+        ][i];
+    }( this.level );
+  var tweet = won ? '项目终于得以问世' : '却还是出师未捷身先死';
 
-  if (typeof ga !== "undefined") {
-    ga("send", "event", "game", "end", type, this.score);
-  }
+  this.tweetButton.target = "_blank";
+  this.tweetButton.href = 
+    "http://service.weibo.com/share/share.php?url=http://git.io/coder&appkey=&"
+    + "title=我在「%232048%23 : 请好好珍惜你身边的每一个程序员」中得到了 " + this.score
+    + " 分，" + tweet + "。&pic=&ralateUid=&language=zh_cn";
 
   this.messageContainer.classList.add(type);
-  this.messageContainer.getElementsByTagName("p")[0].textContent = message;
-
-  this.clearContainer(this.sharingContainer);
-  this.sharingContainer.appendChild(this.scoreTweetButton());
-  twttr.widgets.load();
+  this.messageContainer.getElementsByTagName("p")[0].innerHTML = message;
 };
 
 HTMLActuator.prototype.clearMessage = function () {
   // IE only takes one value to remove at a time.
   this.messageContainer.classList.remove("game-won");
   this.messageContainer.classList.remove("game-over");
-};
-
-HTMLActuator.prototype.scoreTweetButton = function () {
-  var tweet = document.createElement("a");
-  tweet.classList.add("twitter-share-button");
-  tweet.setAttribute("href", "https://twitter.com/share");
-  tweet.setAttribute("data-via", "gabrielecirulli");
-  tweet.setAttribute("data-url", "http://git.io/2048");
-  tweet.setAttribute("data-counturl", "http://gabrielecirulli.github.io/2048/");
-  tweet.textContent = "Tweet";
-
-  var text = "I scored " + this.score + " points at 2048, a game where you " +
-             "join numbers to score high! #2048game";
-  tweet.setAttribute("data-text", text);
-
-  return tweet;
 };
